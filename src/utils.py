@@ -3,8 +3,8 @@ import sys
 import pandas as pd 
 import numpy as np 
 import pickle
-from logger import logging
-from exception import CustomException
+from src.logger import logging
+from src.exception import CustomException
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import confusion_matrix,precision_score,recall_score,f1_score,accuracy_score,classification_report,ConfusionMatrixDisplay
 

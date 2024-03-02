@@ -1,11 +1,12 @@
-import pickle
+import os
 from flask import Flask, request, jsonify, render_template
-from src.pipeline.prediction_pipeline import CustomData,PredictPipline
+from src.pipelines.prediction_pipeline import CustomData,PredictPipline
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
-scalar = pickle.load(open('scaling.pkl', 'rb'))
 
+picFolder = os.path.join('static', 'pics')
+
+app.config['UPLOAD_FOLDER'] = picFolder
 
 @app.route('/', methods=['GET', 'POST'])
 def predict_datapoint():
@@ -13,7 +14,7 @@ def predict_datapoint():
         return render_template("home.html")
     else:
         data = CustomData(
-            gender=int(request.form.get('Gender')),
+            Gender=int(request.form.get('Gender')),
             Age =int(request.form.get('Age')),
             shoulder =int(request.form.get('ShoulderWidth')),
             chest =int(request.form.get('ChestWidth ')),
@@ -28,17 +29,32 @@ def predict_datapoint():
         pred = predict_pipline.predict(final_data)
         result = pred
 
-        if result == 1:
-            return render_template("Result.html", final_result="V-shape")
-        elif result == 2:
-            return render_template("Result.html", final_result="Rectangular")
-        elif result == 3:
-            return render_template("Result.html", final_result="Hourglass")
-        elif result == 4:
-            return render_template("Result.html", final_result="Pear")
-        elif result == 5:
-            return render_template("Result.html", final_result="Triangle")
+        imageList1 = os.listdir('static/vshape')
+        imagelist1 = ['vshape/1.jpeg','vshape/2.png','vshape/3.jpeg','vshape/4.jpg']
+        
+        imageList2 = os.listdir('static/Rectangular')
+        imagelist2 = ['Rectangular/1.jpg','Rectangular/2.jpg','Rectangular/3.jpg','Rectangular/4.png']
+
+        imageList3 = os.listdir('static/Hourglass')
+        imagelist3 = ['Hourglass/1.png','Hourglass/2.jpg','Hourglass/3.jpg','Hourglass/4.png']
+
+        imageList4 = os.listdir('static/Pear')
+        imagelist4 = ['Pear/1.jpg','Pear/2.png','Pear/3.png','Pear/4.jpg']
+
+        imageList5 = os.listdir('static/Triangle')
+        imagelist5 = ['Triangle/1.png','Triangle/2.png','Triangle/3.jpg','Triangle/4.png']
+
+        if result == "V-shape":
+            return render_template("Results1.html",imagelist=imagelist1)
+        elif result == "Rectangular":
+            return render_template("Results2.html", imagelist=imagelist2)
+        elif result == "Hourglass":
+            return render_template("Results3.html", imagelist=imagelist3)
+        elif result == "Pear":
+            return render_template("Results4.html",imagelist=imagelist4)
+        elif result == "Triangle":
+            return render_template("Results5.html", imagelist=imagelist5)
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
