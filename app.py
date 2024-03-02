@@ -1,10 +1,12 @@
-import pickle
+import os
 from flask import Flask, request, jsonify, render_template
 from src.pipelines.prediction_pipeline import CustomData,PredictPipline
 
 app = Flask(__name__)
 
+picFolder = os.path.join('static', 'pics')
 
+app.config['UPLOAD_FOLDER'] = picFolder
 
 @app.route('/', methods=['GET', 'POST'])
 def predict_datapoint():
@@ -27,16 +29,31 @@ def predict_datapoint():
         pred = predict_pipline.predict(final_data)
         result = pred
 
+        imageList1 = os.listdir('static/vshape')
+        imagelist1 = ['vshape/1.jpeg','vshape/2.png','vshape/3.jpeg','vshape/4.jpg']
+        
+        imageList2 = os.listdir('static/Rectangular')
+        imagelist2 = ['Rectangular/1.jpg','Rectangular/2.jpg','Rectangular/3.jpg','Rectangular/4.png']
+
+        imageList3 = os.listdir('static/Hourglass')
+        imagelist3 = ['Hourglass/1.png','Hourglass/2.jpg','Hourglass/3.jpg','Hourglass/4.png']
+
+        imageList4 = os.listdir('static/Pear')
+        imagelist4 = ['Pear/1.jpg','Pear/2.png','Pear/3.png','Pear/4.jpg']
+
+        imageList5 = os.listdir('static/Triangle')
+        imagelist5 = ['Triangle/1.png','Triangle/2.png','Triangle/3.jpg','Triangle/4.png']
+
         if result == "V-shape":
-            return render_template("Results.html", final_result="Fitted Blazers and Jackets, V-neck Shirts and Sweaters, Layering")
+            return render_template("Results1.html",imagelist=imagelist1)
         elif result == "Rectangular":
-            return render_template("Results.html", final_result="Peplum Tops and Dresses, Belted Dresses and Tops,Wrap Dresses and Tops")
+            return render_template("Results2.html", imagelist=imagelist2)
         elif result == "Hourglass":
-            return render_template("Results.html", final_result="Bodycon Skirts and Tops")
+            return render_template("Results3.html", imagelist=imagelist3)
         elif result == "Pear":
-            return render_template("Results.html", final_result="Dark Wash Bottoms")
+            return render_template("Results4.html",imagelist=imagelist4)
         elif result == "Triangle":
-            return render_template("Results.html", final_result="Statement Tops")
+            return render_template("Results5.html", imagelist=imagelist5)
 
 
 if __name__ == "__main__":

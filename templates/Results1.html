@@ -10,7 +10,7 @@
 
 .container {
   width: 50%;
-  height: 500px;
+  height: 550px;
   border-radius: 5px;
   background-color: #8d8f90;
   padding: 20px;
@@ -59,33 +59,34 @@ h3 {
 	text-align: center;
 }
 
-h4 {
-    margin-top: 40px;
-        margin-bottom: 4px;
-        color: #343434;
-        font-size: 20px;
-        text-align: bottom;
-        font-weight: small;
-        font-family: 'Trebuchet MS', sans-serif;
-        margin-top: 10px;
-        margin-bottom: 6px;
-        line-height: 10px;
-        text-align: center;
-    }
+
+    .preview-image {
+        height: 180px;
+        width: 20%;
+        margin: 1em 0 0.5em 0;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding-left: 10px; 
+        padding-right: 10px; 
+      }
     </style>
 </head>
 <body>
-    <h1>OutFit That fit on your body</h1>
+    <h1>Clothing Style Suggestions</h1>
 
     <div class="container" >
        
         <!-- <h4>{{ pred }}</h4> -->
         
        <div class="prediction">
-            <h3>{{ final_result }}</h3>
-            {% for imagelist in imagelist %}
-            <img src = "{{ url_for('static', filename=imagelist)}}">
-            {% endfor %}
+        <h3>Fitted Clothing</h3>
+        <h3>Structured Jackets Clothing</h3>
+        <h3>Tailored Clothing</h3>
+        <h3>V-Neck Tops</h3>
+        {% for imagelist in imagelist %}
+        <img class="preview-image" src = "{{ url_for('static', filename=imagelist)}}">
+        
+        {% endfor %}
         </div>
 </div>
 
