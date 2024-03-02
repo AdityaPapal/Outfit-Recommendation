@@ -1,10 +1,9 @@
 import pickle
 from flask import Flask, request, jsonify, render_template
-from src.pipeline.prediction_pipeline import CustomData,PredictPipline
+from src.pipelines.prediction_pipeline import CustomData,PredictPipline
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
-scalar = pickle.load(open('scaling.pkl', 'rb'))
+
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -13,7 +12,7 @@ def predict_datapoint():
         return render_template("home.html")
     else:
         data = CustomData(
-            gender=int(request.form.get('Gender')),
+            Gender=int(request.form.get('Gender')),
             Age =int(request.form.get('Age')),
             shoulder =int(request.form.get('ShoulderWidth')),
             chest =int(request.form.get('ChestWidth ')),
@@ -28,17 +27,17 @@ def predict_datapoint():
         pred = predict_pipline.predict(final_data)
         result = pred
 
-        if result == 1:
-            return render_template("Result.html", final_result="V-shape")
-        elif result == 2:
-            return render_template("Result.html", final_result="Rectangular")
-        elif result == 3:
-            return render_template("Result.html", final_result="Hourglass")
-        elif result == 4:
-            return render_template("Result.html", final_result="Pear")
-        elif result == 5:
-            return render_template("Result.html", final_result="Triangle")
+        if result == "V-shape":
+            return render_template("Results.html", final_result="Fitted Blazers and Jackets, V-neck Shirts and Sweaters, Layering")
+        elif result == "Rectangular":
+            return render_template("Results.html", final_result="Peplum Tops and Dresses, Belted Dresses and Tops,Wrap Dresses and Tops")
+        elif result == "Hourglass":
+            return render_template("Results.html", final_result="Bodycon Skirts and Tops")
+        elif result == "Pear":
+            return render_template("Results.html", final_result="Dark Wash Bottoms")
+        elif result == "Triangle":
+            return render_template("Results.html", final_result="Statement Tops")
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

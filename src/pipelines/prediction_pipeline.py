@@ -60,7 +60,7 @@ class CustomData:
     def get_data_as_data_frame(self):
         try:
             custom_data_input_dict = {
-                'Gender':[self.ssc_p], 
+                'Gender':[self.Gender], 
                 'Age':[self.Age],
                 'ShoulderWidth':[self.shoulder],
                 'ChestWidth ' : [self.chest],
