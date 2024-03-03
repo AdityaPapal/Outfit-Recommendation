@@ -42,7 +42,7 @@
     }
 
     .container {
-        width: 40%;
+        width: 60%;
         border-radius: 5px;
         background-color: #8d8f90;
         padding: 20px;
@@ -50,8 +50,9 @@
         text-align: center;
         margin-top: auto;
         margin-bottom: auto;
-        margin-left: auto;
-        margin-right: auto;
+        margin: auto;
+        justify-content: center; 
+        align-items: center;
     }
     label {
         display: inline-block;
@@ -132,7 +133,9 @@
         <h1>Clothing Style Suggestions</h1>
         <br><br>
 
-
+        <div class="container">
+            <img src="{{ url_for('video') }}" width="60%"  />
+        </div>
 
     <div class="container">
         <form action="{{url_for('predict_datapoint')}}" method="POST">

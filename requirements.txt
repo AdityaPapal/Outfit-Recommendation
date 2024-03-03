@@ -4,4 +4,6 @@ seaborn
 matplotlib
 scikit-learn
 flask
+opencv-python
+mediapipe
 -e .
