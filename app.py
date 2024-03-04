@@ -71,9 +71,9 @@ def generate_frames(duration=10):
                 cv2.putText(frame, f"{measurement}: {value:.2f} px", (10, 30 + idx * 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 
-            for i in enumerate(measurements.items()):
-                with open(output_file, 'w') as f:
-                    f.write(f"{measurement}: {value:.2f} cm")
+            
+            with open(output_file, 'w') as f:
+                f.write(f"{value:.2f} cm")
 
         # Encode the frame in JPEG format
         ret, buffer = cv2.imencode('.jpg', frame)
@@ -105,36 +105,66 @@ def predict_datapoint():
             shoulder_to_waist =int(request.form.get('ShoulderToWaist ')),
         )
 
-
+        
         final_data = data.get_data_as_data_frame()
+        gender = final_data['Gender'][0]
         predict_pipline = PredictPipline()
         pred = predict_pipline.predict(final_data)
         result = pred
 
-        imageList1 = os.listdir('static/vshape')
-        imagelist1 = ['vshape/1.jpeg','vshape/2.png','vshape/3.jpeg','vshape/4.jpg']
+        imageList1 = os.listdir('static/vshapemen')
+        imagelist1 = ['vshapemen/1.jpeg','vshapemen/2.jpg','vshapemen/3.jpeg','vshapemen/4.jpg']
         
-        imageList2 = os.listdir('static/Rectangular')
-        imagelist2 = ['Rectangular/1.jpg','Rectangular/2.jpg','Rectangular/3.jpg','Rectangular/4.png']
+        imageList6 = os.listdir('static/vshape')
+        imagelist6 = ['vshape/1.png','vshape/2.png','vshape/3.jpg','vshape/4.jpg']
+
+        imageList2 = os.listdir('static/Rectangularmen')
+        imagelist2 = ['Rectangularmen/1.png','Rectangularmen/2.png','Rectangularmen/3.jpg','Rectangularmen/4.png']
+
+        imageList7 = os.listdir('static/Rectangular')
+        imagelist7 = ['Rectangular/1.jpg','Rectangular/2.jpg','Rectangular/3.jpeg','Rectangular/4.png']
 
         imageList3 = os.listdir('static/Hourglass')
-        imagelist3 = ['Hourglass/1.png','Hourglass/2.jpg','Hourglass/3.jpg','Hourglass/4.png']
+        imagelist3 = ['Hourglass/1.png','Hourglass/2.jpg','Hourglass/3.jpg','Hourglass/4.jpeg']
+
+        imageList8 = os.listdir('static/Hourglassmen')
+        imagelist8 = ['Hourglassmen/1.jpg','Hourglassmen/2.jpeg','Hourglassmen/3.jpg','Hourglassmen/4.png']
 
         imageList4 = os.listdir('static/Pear')
-        imagelist4 = ['Pear/1.jpg','Pear/2.png','Pear/3.png','Pear/4.jpg']
+        imagelist4 = ['Pear/1.jpg','Pear/2.jpg','Pear/3.png','Pear/4.jpg']
+
+        imageList9 = os.listdir('static/Pearmen')
+        imagelist9 = ['Pearmen/1.jpeg','Pearmen/2.png','Pearmen/3.jpg','Pearmen/4.jpg']
 
         imageList5 = os.listdir('static/Triangle')
-        imagelist5 = ['Triangle/1.png','Triangle/2.png','Triangle/3.jpg','Triangle/4.png']
+        imagelist5 = ['Triangle/1.png','Triangle/2.jpg','Triangle/3.jpg','Triangle/4.png']
 
-        if result == "V-shape":
+        imageList10 = os.listdir('static/Trianglemen')
+        imagelist10 = ['Trianglemen/1.jpg','Trianglemen/2.png','Trianglemen/3.jpg','Trianglemen/4.jpg']
+
+        if result == "V-shape" and gender == 1:
             return render_template("Results1.html",imagelist=imagelist1)
-        elif result == "Rectangular":
+        if result == "V-shape" and gender == 2 :
+            return render_template("Results1.html",imagelist=imagelist6)
+        
+        elif result == "Rectangular" and gender == 1  :
             return render_template("Results2.html", imagelist=imagelist2)
-        elif result == "Hourglass":
+        elif result == "Rectangular" and gender == 2  :
+            return render_template("Results2.html", imagelist=imagelist7)
+        
+        elif result == "Hourglass" and gender == 1  :
+            return render_template("Results3.html", imagelist=imagelist8)
+        elif result == "Hourglass" and gender == 2  :
             return render_template("Results3.html", imagelist=imagelist3)
-        elif result == "Pear":
+        
+        elif result == "Pear" and gender == 1:
+            return render_template("Results4.html",imagelist=imagelist9)
+        elif result == "Pear" and gender == 2:
             return render_template("Results4.html",imagelist=imagelist4)
-        elif result == "Triangle":
+        
+        elif result == "Triangle " and gender == 1:
+            return render_template("Results5.html", imagelist=imagelist10)
+        elif result == "Triangle " and gender == 2:
             return render_template("Results5.html", imagelist=imagelist5)
 
 @app.route('/video')
