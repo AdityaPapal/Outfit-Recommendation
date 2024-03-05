@@ -46,6 +46,8 @@ def calculate_measurements(results):
 
     return measurements
 
+
+final_measurements = []
 def generate_frames(duration=10):
     start_time = time.time()
     while time.time() - start_time < duration:
@@ -66,14 +68,13 @@ def generate_frames(duration=10):
             # Calculate measurements
             measurements = calculate_measurements(results)
             
+            for i in measurements:
+                final_measurements.append(measurements[i])
             # Display the measured distances on the frame
             for idx, (measurement, value) in enumerate(measurements.items()):
                 cv2.putText(frame, f"{measurement}: {value:.2f} px", (10, 30 + idx * 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
                 
-            
-            with open(output_file, 'w') as f:
-                f.write(f"{value:.2f} cm")
 
         # Encode the frame in JPEG format
         ret, buffer = cv2.imencode('.jpg', frame)
@@ -98,11 +99,16 @@ def predict_datapoint():
         data = CustomData(
             Gender=int(request.form.get('Gender')),
             Age =int(request.form.get('Age')),
-            shoulder =int(request.form.get('ShoulderWidth')),
-            chest =int(request.form.get('ChestWidth ')),
-            waist=int(request.form.get('Waist ')),
-            hips =int(request.form.get('Hips ')),
-            shoulder_to_waist =int(request.form.get('ShoulderToWaist ')),
+            # shoulder =int(request.form.get('ShoulderWidth')),
+            # chest =int(request.form.get('ChestWidth ')),
+            # waist=int(request.form.get('Waist ')),
+            # hips =int(request.form.get('Hips ')),
+            # shoulder_to_waist =int(request.form.get('ShoulderToWaist ')),
+            shoulder=int(final_measurements[0]*100),
+            chest= int(final_measurements[1]*100),
+            waist=int(final_measurements[2]*100),
+            hips=int(final_measurements[3]*100),
+            shoulder_to_waist=int(final_measurements[4]*100)
         )
 
         
