@@ -99,16 +99,16 @@ def predict_datapoint():
         data = CustomData(
             Gender=int(request.form.get('Gender')),
             Age =int(request.form.get('Age')),
-            # shoulder =int(request.form.get('ShoulderWidth')),
-            # chest =int(request.form.get('ChestWidth ')),
-            # waist=int(request.form.get('Waist ')),
-            # hips =int(request.form.get('Hips ')),
-            # shoulder_to_waist =int(request.form.get('ShoulderToWaist ')),
-            shoulder=int(final_measurements[0]*100),
-            chest= int(final_measurements[1]*100),
-            waist=int(final_measurements[2]*100),
-            hips=int(final_measurements[3]*100),
-            shoulder_to_waist=int(final_measurements[4]*100)
+            shoulder =int(request.form.get('ShoulderWidth')),
+            chest =int(request.form.get('ChestWidth ')),
+            waist=int(request.form.get('Waist ')),
+            hips =int(request.form.get('Hips ')),
+            shoulder_to_waist =int(request.form.get('ShoulderToWaist '))
+            # shoulder=int(final_measurements[0]*100),
+            # chest= int(final_measurements[1]*100),
+            # waist=int(final_measurements[2]*100),
+            # hips=int(final_measurements[3]*100),
+            # shoulder_to_waist=int(final_measurements[4]*100),
         )
 
         
